@@ -72,8 +72,8 @@ function setWarningPosition(){
       position.left = '';
       position.bottom = "25px";
       position.right = '25px';
-      }
-  }
+    }
+}
 
   useEffect(() => {
     const abortController = new AbortController()
@@ -88,7 +88,7 @@ function setWarningPosition(){
         setUser(data)
       }
     })
-
+    
     return function cleanup(){
       abortController.abort()
     }
@@ -99,20 +99,23 @@ function setWarningPosition(){
       return <Redirect to='/signin'/>
     }
 
+    if(user.muggle != undefined && user.muggle == false){
+        document.getElementById("statsLink").style.display = '';
+    }
+
     setWarningPosition();
     return (<div>
+         
          {/** Stats link */}
-         {
-         !user.mugggle && (
-            <div style={{width:'10%'}}  onClick={() => {resetStats()}}>
-              <Link to={"/users/" + auth.isAuthenticated().user._id}>
-                <Avatar title='Reset all users stats' style={{height:'60px', width:'60px', margin:'auto', backgroundColor:'#d5f494'}}>
-                  <img src={Stats} style={{width:'25px'}} />
+              <div style={{width:'10%', position:'fixed', display:'none'}} id='statsLink'>
+                <Link to={"/users/" + auth.isAuthenticated().user._id}>
+                  <Avatar title='Reset all users stats' style={{height:'60px', width:'60px', margin:'auto', backgroundColor:'#d5f494'}}>
+                      <img src={Stats} style={{width:'25px'}} />
                   </Avatar>
-              </Link>        
-              <Typography variant="h6" style={{margin:'auto', textAlign:'center'}}> Stats </Typography>
-           </div>)
-           }
+                </Link>        
+                <Typography variant="h6" style={{margin:'auto', textAlign:'center'}}> Stats </Typography>
+              </div>
+          {/** Profile */}
               <Paper className={classes.root} elevation={4}>
                 <Typography variant="h6" className={classes.title}>Profile </Typography>
                 <List dense>
